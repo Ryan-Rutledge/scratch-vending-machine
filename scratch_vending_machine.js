@@ -6,16 +6,17 @@
  * Creates a new Scratch Vending Machine (SVM).
  * @param {Object} container DOM element to contain vending machine gui.
  * @class
- */ function ScratchVendingMachine(container) {
-	this.gui = new ScratchVendingMachineGUI();
-	this.gui.container(container);
-	this.gui.disableSlotClick(true);
+ */
+function ScratchVendingMachine(container) {
+	var self = this;
 
-	this._slots = [ {}, {}, {} ];
-	this.currency(0);
-	this.takeRefund();
-	this.currency(0);
-	this.dispensed(null, null);
+	self.gui = new ScratchVendingMachineGUI(container);
+
+	self._slots = [ {}, {}, {} ];
+	self.currency(0);
+	self.takeRefund();
+	self.currency(0);
+	self.dispensed(null, null);
 }
 
 /**
@@ -54,16 +55,18 @@ ScratchVendingMachine.prototype.currency._set = function(currency) {
 };
 
 /**
- * Removes currency from SVM and shows refund animation.
- * @return {number} Currency in SVM before refund.
+ * Gets or sets svm refund amount.
+ * @return {number} [amount] Refund amount.
  */
-ScratchVendingMachine.prototype.refund = function() {
-	this._refund = this.currency();
-	this.currency(0);
-
-	this.gui.refund(this._refund);
-
-	return this._refund;
+ScratchVendingMachine.prototype.refund = function(amount) {
+	if (amount) {
+		this._refund = amount;
+		this.gui.refund();
+		this.currency(this.currency() - amount);
+	}
+	else {
+		return this._refund;
+	}
 };
 
 /**
@@ -123,74 +126,58 @@ ScratchVendingMachine.prototype.state._set = function(state) {
 
 /**
  * Tells the user something.
- * @param {string} message Prompt to show user.
- * @param {function} [callback] Called after answer goes away
+ * @param {string} [message] Prompt to show user. If not supplied, hides previous message.
+ * @param {number} [timeout] Number of milliseconds to wait before hiding text.
  * @return {Object} The current SVM object.
  */
-ScratchVendingMachine.prototype.say = function(message, callback) {
-	this.gui.say(message, callback);
-};
-
-/**
- * Asks user a question.
- * @param {string} Question Prompt to show user.
- * @param {askCallback} callback Called after an answer is supplied.
- * @return {Object} The current SVM object.
- */
-ScratchVendingMachine.prototype.ask = function(question, callback) {
+ScratchVendingMachine.prototype.say = function(message, timeout) {
 	var self = this;
+	self.gui.say(message);
 
-	self.gui.ask(question, function(answer) {
-		self.answer(answer);
-		self.gui.disableSlotClick(true);
-		callback(answer);
-	});
+	if (timeout) {
+		setTimeout(function() {
+			self.say();
+		}, timeout);
+	}
 
 	return self;
 };
 
 /**
- * Gets the most recent answer to ask function.
+ * Gets or sets the most recent reply.
  * @private
- * @param [string] answer
- * @return {string|Object} If no argument is provided,returns the most recent
- *   question or null if no questions have been asked yet. If a new
- *   answer is given, returns the current SVM object.
+ * @param [string] reply
+ * @return {string} If no argument is provided,returns the most recent
+ *   reply.
  */
-ScratchVendingMachine.prototype.answer = function(answer) {
-	if (answer === undefined) {
-		return this.answer._get.call(this);
+ScratchVendingMachine.prototype.reply = function(reply) {
+	if (reply === undefined) {
+		return this.reply._get.call(this);
 	}
 	else {
-		this.answer._set.call(this, answer);
+		this.reply._set.call(this, reply);
 		return this;
 	}
 };
 
 /**
- * Gets the most recent answer to ask function.
+ * Gets the most recent reply to ask function.
  * @private
- * @return {string} Answer to most recent question, or null if no questions
+ * @return {string} Most recent input.
  *   have been asked yet.
  */
-ScratchVendingMachine.prototype.answer._get = function() {
-	return this._answer;
+ScratchVendingMachine.prototype.reply._get = function() {
+	return this._reply;
 };
 
 /**
- * Sets the most recent answer to ask function.
+ * Sets the most recent reply to ask function.
  * @private
- * @param {string} answer Answer to most recent question.
+ * @param {string} reply Most recent input.
  */
-ScratchVendingMachine.prototype.answer._set = function(answer) {
-	this._answer = answer;
+ScratchVendingMachine.prototype.reply._set = function(reply) {
+	this._reply = reply;
 };
-
-/**
- * Handler for a SVM ask() function..
- * @callback askCallback
- * @param {string} answer User reply to question..
- */
 
 /**
  * Gets item count or puts a new item into slot.
@@ -270,38 +257,15 @@ ScratchVendingMachine.prototype.slot._set = function(slotIdentifier, count, name
 };
 
 /**
- * Sets a callback function to be called when a slot is clicked.
- * @private
- * @param {clickCallback} callback Slot click event callback.
- */
-ScratchVendingMachine.prototype.slot._click = function(callback) {
-	var self = this;
-	
-	self.gui.disableSlotClick(false);
-	self.gui.slotClick(function(index) {
-		self._clickedSlot = index;
-		self.gui.disableSlotClick(true);
-		callback(self.slot(index));
-	});
-};
-
-/**
- * Sets a callback function to be called when a slot is clicked.
- * @private
- * @param {clickCallback} callback Slot click event callback.
- * @return {Object} The current SVM object.
- */
-ScratchVendingMachine.prototype.click = function(callback) {
-	this.slot._click.call(this, callback);
-	return this;
-};
-
-/**
- * Gets last clicked slot
+ * Gets and/or sets last clicked slot.
  * @private
  * @return {Object} The current SVM object.
  */
-ScratchVendingMachine.prototype.clicked = function() {
+ScratchVendingMachine.prototype.clicked = function(slot) {
+	if (slot && slot['index'] !== undefined) {
+		this._clickedSlot = slot['index'];
+	}
+
 	return this.slot(this._clickedSlot);
 }
 
@@ -396,8 +360,41 @@ ScratchVendingMachine.prototype.takeItem = function() {
  * @return {Object} The current SVM object.
  */
 ScratchVendingMachine.prototype.loop = function(callback) {
-	this._loop = callback;
-	return this;
+	var self = this;
+	self._next(callback);
+
+	// Refund click event
+	self.gui.refundAction(function() {
+		self.reply('refund');
+		self._next.call(self);
+	});
+
+	// Slot click event
+	self.gui.slotAction(function(soda) {
+		self.reply('soda');
+		self.clicked(self.slot(soda));
+		self._next.call(self);
+	});
+
+	// Insert click event
+	self.gui.insertAction(function(amount) {
+		self.reply(amount);
+		self._next.call(self);
+	});
+
+	// Dispenser click event
+	self.gui.dispenserAction(function() {
+		self.reply('dispense');
+		self._next.call(self);
+	});
+
+	// Take refund click event
+	self.gui.takeRefundAction(function() {
+		self.reply('cash');
+		self._next.call(self);
+	});
+
+	return self;
 };
 
 /**
@@ -410,8 +407,11 @@ ScratchVendingMachine.prototype.loop = function(callback) {
  * Initiates logic loop
  * @private
  */
-ScratchVendingMachine.prototype._next = function() {
-	if (this._loop) {
+ScratchVendingMachine.prototype._next = function(loop) {
+	if (loop) {
+		this._loop = loop;
+	}
+	else if (this._loop) {
 		this._loop(this);
 	}
 };
@@ -423,7 +423,7 @@ ScratchVendingMachine.prototype._next = function() {
 ScratchVendingMachine.prototype.json = function() {
 	return {
 		state: this.state(),
-		answer: this.answer(),
+		reply: this.reply(),
 		currency: this.currency(),
 		dispenser: this.dispensed(),
 		slots: [

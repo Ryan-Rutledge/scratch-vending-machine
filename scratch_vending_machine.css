@@ -7,12 +7,16 @@
 	overflow: hidden;
 }
 
+.svm_container button:focus {
+	outline: 0;
+}
+
 .svm_state {
 	position: absolute;
 	font: 2em sans-serif;
-	top: 10px;
-	left: 10px;
-	color: #111;
+	bottom: 45px;
+	right: 45px;
+	color: #fff;
 	display: block;
 }
 
@@ -77,18 +81,25 @@
 	box-sizing: border-box;
 }
 
+.svm_wallet {
+	width: 100px;
+	float: right;
+	position: relative;
+}
+
 .svm_vending_machine {
 	position: absolute;
 	left: 0;
 	right: 0;
 	top: -5px;
-	margin: 20px auto;
+	margin: 20px 10px;
 	background-color: #336;
-	width: calc(100% - 80px);
-	height: calc(100% - 40px);
+	width: 280px;
+	height: 360px;
 	border-right: 15px solid #113;
 	border-radius: 20px 35px 20px 10px;
 	box-shadow: 38px 5px 15px -12px #0a0a0a, -4px -5px 3px #113 inset;
+	float: left;
 }
 
 .svm_inner_container {
@@ -218,9 +229,14 @@
 	box-shadow: -2px -2px 2px #000 inset;
 }
 
+.svm_refund_container {
+	margin: 20px auto 0 auto;
+	width: 50px;
+}
+
 .svm_refund {
 	background-color: #111;
-	margin: 20px auto 0 auto;
+	margin: 0 auto 10px auto;
 	width: 50px;
 	height: 20px;
 	position: relative;
@@ -238,6 +254,7 @@
 	margin: auto;
 	box-shadow: 2px 2px 4px #111;
 	visibility: hidden;
+	cursor: pointer;
 }
 
 .svm_refund > .svm_money {
@@ -248,6 +265,36 @@
 	height: 20px;
 	transition: height 1s;
 	visibility: visible;
+}
+
+.svm_refund_btn {
+	background-color: #d42;
+	border-radius: 50%;
+	height: 20px;
+	width: 20px;
+	float: right;
+	border: none;
+	box-shadow: -1px -1px 1px #000 inset;
+}
+.svm_refund_btn:not(:disabled) {
+	cursor: pointer;
+}
+.svm_refund_btn:active:not(:disabled) {
+	box-shadow: 1px 1px 1px #000 inset;
+}
+.svm_refund_btn:disabled {
+	box-shadow: 0 0 1px #A00 inset;
+	background-color: #933;
+}
+
+.svm_refund_slot {
+	height: 20px;
+	width: 10px;
+	background-color: #222;
+	border-radius: 1px;
+	float: left;
+	margin-left: 4px;
+	box-shadow: 1px 1px 2px #080808;
 }
 
 .svm_footer {
@@ -279,6 +326,7 @@
 	right: 0;
 	bottom: 0;
 	margin: auto;
+	cursor: pointer;
 	transform: rotate(170deg);
 }
 

@@ -25,6 +25,89 @@
         <script src="./example_code.js"></script>
     </head>
     <body onload="createSVM()">
-		<div id="vmContainer"></div>
+		<div id="vmContainer">
+			<div class="svm_container">
+				<div class="svm_vending_machine">
+					<div class="svm_inner_container">
+						<span class="svm_state"></span>
+						<ul class="svm_slot_list">
+							<li class="svm_slot">
+								<button class="svm_slot_0 svm_slot_button" value="0">
+									<img class="svm_slot_img">
+									<span class="svm_slot_name">Coco Cola</span>
+									<span class="svm_slot_count"></span>
+									<br />
+									<span class="svm_slot_price"></span>
+								</button>
+							</li>
+							<li class="svm_slot">
+								<button class="svm_slot_1 svm_slot_button" value="1">
+									<img class="svm_slot_img">
+									<span class="svm_slot_name">Mountain Dew</span>
+									<span class="svm_slot_count"></span>
+									<br />
+									<span class="svm_slot_price"></span>
+								</button>
+							</li>
+							<li class="svm_slot">
+								<button class="svm_slot_2 svm_slot_button" value="2">
+									<img class="svm_slot_img">
+									<span class="svm_slot_name"></span>
+									<span class="svm_slot_count"></span>
+									<br />
+									<span class="svm_slot_price"></span>
+								</button>
+							</li>
+						</ul>
+						<div class="svm_aside">
+							<div class="svm_display">
+								$<span class="svm_currency">0.00</span>
+							</div>
+							<ul class="svm_keypad">
+								<li class="svm_keypad_key"></li>
+								<li class="svm_keypad_key"></li>
+								<li class="svm_keypad_key"></li>
+								<li class="svm_keypad_key"></li>
+								<li class="svm_keypad_key"></li>
+								<li class="svm_keypad_key"></li>
+								<li class="svm_keypad_key"></li>
+								<li class="svm_keypad_key"></li>
+								<li class="svm_keypad_key"></li>
+								<li class="svm_keypad_key"></li>
+								<li class="svm_keypad_key"></li>
+								<li class="svm_keypad_key"></li>
+							</ul>
+							<div class="svm_refund_container">
+								<div class="svm_refund" title="Refund">
+									<div class="svm_money"></div>
+								</div>
+								<div class="svm_refund_slot">
+								</div>
+								<button class="svm_refund_btn">
+								</button>
+							</div>
+						</div>
+						<div class="svm_footer">
+							<div class="svm_dispenser">
+								<img class="svm_dispenser_img"/>
+						   </div>
+						</div>
+					</div>
+				</div>
+				<div class="svm_prompt">
+					<label class="svm_question"></label>
+					<div class="svm_answer_box">
+						<br />
+						<input class="svm_input" />
+						<button class="svm_submit" />Enter</button>
+					</div>
+				</div>
+				<div class="svm_wallet">
+					<button class="svm_wallet_coin svm_wallet_200" value="200">two dollar</button>
+					<button class="svm_wallet_coin svm_wallet_100" value="100" title="Dollar Bill">dollar</button>
+					<button class="svm_wallet_coin svm_wallet_25" value="25" title="Quarter">quarter</button>
+				</div>
+			</div>
+		</div>
     </body>
 </html>

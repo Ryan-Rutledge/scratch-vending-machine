@@ -6,9 +6,9 @@
  * Displays vending machine gui.
  * @class
  */
-function ScratchVendingMachineGUI() {
+function ScratchVendingMachineGUI(container) {
 	var self = this;
-	var gui = ScratchVendingMachineGUI.prototype.TEMPLATE.cloneNode(true);
+	var gui = container;
 	self.elem = {
 		gui: gui,
 		state: gui.getElementsByClassName('svm_state')[0],
@@ -18,6 +18,8 @@ function ScratchVendingMachineGUI() {
 		prompt: gui.getElementsByClassName('svm_prompt')[0],
 		submit: gui.getElementsByClassName('svm_submit')[0],
 		refund: gui.getElementsByClassName('svm_refund')[0],
+		refundBtn: gui.getElementsByClassName('svm_refund_btn')[0],
+		refundMoney: gui.getElementsByClassName('svm_money')[0],
 		question: gui.getElementsByClassName('svm_question')[0],
 		currency: gui.getElementsByClassName('svm_currency')[0],
 		dispenser: gui.getElementsByClassName('svm_dispenser')[0],
@@ -26,7 +28,8 @@ function ScratchVendingMachineGUI() {
 		slotName: gui.getElementsByClassName('svm_slot_name'),
 		slotImage: gui.getElementsByClassName('svm_slot_img'),
 		slotCount: gui.getElementsByClassName('svm_slot_count'),
-		slotPrice: gui.getElementsByClassName('svm_slot_price')
+		slotPrice: gui.getElementsByClassName('svm_slot_price'),
+		coins: gui.getElementsByClassName('svm_wallet_coin')
 	};
 
 	function submitAnswerHandler() {
@@ -47,91 +50,33 @@ function ScratchVendingMachineGUI() {
 
 ScratchVendingMachineGUI.prototype.ANIMATE_TIMEOUT = 2000;
 ScratchVendingMachineGUI.prototype.SLOT_COUNT = 3;
+ScratchVendingMachineGUI.prototype.COIN_COUNT = 3;
 ScratchVendingMachineGUI.prototype.TEMPLATE = document.createElement('div');
 ScratchVendingMachineGUI.prototype.TEMPLATE.className = 'svm_container';
 ScratchVendingMachineGUI.prototype.TEMPLATE.innerHTML = 
-	'<div class="svm_container">' +
-	'	<span class="svm_state"></span>' +
-	'	<div class="svm_vending_machine">' +
-	'		<div class="svm_inner_container">' +
-	'			<ul class="svm_slot_list">' +
-	'				<li class="svm_slot">' +
-	'					<button class="svm_slot_0 svm_slot_button" value="0">' +
-	'						<img class="svm_slot_img">' +
-	'						<span class="svm_slot_name">Coco Cola</span>' +
-'							<span class="svm_slot_count"></span>' +
-'							<br />' +
-'							<span class="svm_slot_price"></span>' +
-	'					</button>' +
-	'				</li>' +
-	'				<li class="svm_slot">' +
-	'					<button class="svm_slot_1 svm_slot_button" value="1">' +
-	'						<img class="svm_slot_img">' +
-	'						<span class="svm_slot_name">Mountain Dew</span>' +
-	'						<span class="svm_slot_count"></span>' +
-	'						<br />' +
-	'						<span class="svm_slot_price"></span>' +
-	'					</button>' +
-	'				</li>' +
-	'				<li class="svm_slot">' +
-	'					<button class="svm_slot_2 svm_slot_button" value="2">' +
-	'						<img class="svm_slot_img">' +
-	'						<span class="svm_slot_name"></span>' +
-	'						<span class="svm_slot_count"></span>' +
-	'						<br />' +
-	'						<span class="svm_slot_price"></span>' +
-	'					</button>' +
-	'				</li>' +
-	'			</ul>' +
-	'			<div class="svm_aside">' +
-	'				<div class="svm_display">' +
-	'					$<span class="svm_currency">0.00</span>' +
-	'				</div>' +
-	'				<ul class="svm_keypad">' +
-	'					<li class="svm_keypad_key"></li>' +
-	'					<li class="svm_keypad_key"></li>' +
-	'					<li class="svm_keypad_key"></li>' +
-	'					<li class="svm_keypad_key"></li>' +
-	'					<li class="svm_keypad_key"></li>' +
-	'					<li class="svm_keypad_key"></li>' +
-	'					<li class="svm_keypad_key"></li>' +
-	'					<li class="svm_keypad_key"></li>' +
-	'					<li class="svm_keypad_key"></li>' +
-	'					<li class="svm_keypad_key"></li>' +
-	'					<li class="svm_keypad_key"></li>' +
-	'					<li class="svm_keypad_key"></li>' +
-	'				</ul>' +
-	'				<div class="svm_refund">' +
-	'					<div class="svm_money"></div>' +
-	'				</div>' +
-	'			</div>' +
-	'			<div class="svm_footer">' +
-	'				<div class="svm_dispenser">' +
-	'					<img class="svm_dispenser_img"/>' +
-	'               </div>' +
-	'			</div>' +
-	'		</div>' +
-	'	</div>' +
-	'	<div class="svm_prompt">' +
-	'		<label class="svm_question"></label>' +
-	'		<div class="svm_answer_box">' +
-	'			<br />' +
-	'			<input class="svm_input" />' +
-	'			<button class="svm_submit" />Enter</button>' +
-	'		</div>' +
-	'	</div>' +
-	'</div>';
 
 /**
  * Applies a function to all slot elements.
  * @private
- * @param {function} action.- Action to do to each slot. Passed elem.
+ * @param {function} callback.- Action to do to each slot. Passed elem.
  */
 ScratchVendingMachineGUI.prototype._eachSlot = function(callback) {
 	for (var i = 0; i < ScratchVendingMachineGUI.prototype.SLOT_COUNT; i++) {
 		callback(this.elem.slots[i]);
 	}
 };
+
+/**
+ * Applies a function to all coin elements.
+ * @private
+ * @param {function} callback.- Action to do to each coin. Passed elem.
+ */
+ScratchVendingMachineGUI.prototype._eachCoin = function(callback) {
+	for (var i = 0; i < ScratchVendingMachineGUI.prototype.COIN_COUNT; i++) {
+		callback(this.elem.coins[i]);
+	}
+};
+
 
 /**
  * Inserts gui into container.
@@ -193,20 +138,21 @@ ScratchVendingMachineGUI.prototype.ask = function(question, callback) {
 /**
  * Gives the user a message.
  * @param {string} message Prompt to show user.
- * @param {function} [callback] Called after answer goes away.
  */
-ScratchVendingMachineGUI.prototype.say = function(message, callback) {
+ScratchVendingMachineGUI.prototype.say = function(message) {
 	var self = this;
 
-	self.elem.question.textContent = message;
-	self.elem.answer.style.display = 'none';
-	self.elem.prompt.style.display = 'block';
-
-	setTimeout(function() {
+	if (message) {
+		// Show message
+		self.elem.question.textContent = message;
+		self.elem.answer.style.display = 'none';
+		self.elem.prompt.style.display = 'block';
+	}
+	else {
+		// Hide message
 		self.elem.prompt.style.display = '';
 		self.elem.answer.style.display = '';
-		if (callback) callback();
-	}, ScratchVendingMachineGUI.prototype.ANIMATE_TIMEOUT);
+	}
 };
 
 /**
@@ -227,39 +173,116 @@ ScratchVendingMachineGUI.prototype.slot = function(index, slot) {
 
 /**
  * Assigns a callback function to a slot click event.
- * @param {clickCallback} callback Slot click event callback.
+ * @param {clickCallback} [callback] Slot click event callback.
  */
-ScratchVendingMachineGUI.prototype.slotClick = function(callback) {
+ScratchVendingMachineGUI.prototype.slotAction = function(callback) {
 	var self = this;
 
 	// Remove previous click event
-	if (self._slotClickEvent) { 
+	if (self._slotEventCallback) { 
 		self._eachSlot.call(this, function(slot) {
-			slot.removeEventListener('click', self._slotClickEvent);
+			slot.removeEventListener('click', self._slotEventCallback);
 		});
 	}
 
-	self._slotClickEvent = function(e) {
+	// Create new click event
+	self._slotEventCallback = function(e) {
 		if (!e.target.disabled) {
 			callback(parseInt(e.target.value));
 		}
 	};
 
-	// Add new click event
+	// Add click event to slots
 	self._eachSlot.call(this, function(slot) {
-		slot.addEventListener('click', self._slotClickEvent);
+		slot.addEventListener('click', self._slotEventCallback);
 	});
 };
 
 /**
- * Disables or enables slot click listeners.
- * @param {boolean} disable If true, slots will be disabled. Otherwise,
- *   slots will listen for click events.
+ * Assigns a callback function to a refund button click event.
+ * @param {clickCallback} [callback] Refund button click event callback.
  */
-ScratchVendingMachineGUI.prototype.disableSlotClick = function(disable) {
-	this._eachSlot(function(slot) {
-		slot.disabled = disable;
+ScratchVendingMachineGUI.prototype.refundAction = function(callback) {
+	// Remove previous click event
+	if (this._refundEventCallback) { 
+		this.elem.refundBtn.removeEventListener('click', this._refundEventCallback);
+	}
+
+	this._refundEventCallback = function(e) {
+		if (!e.target.disabled) {
+			callback();
+		}
+	};
+
+	// Add new click event
+	this.elem.refundBtn.addEventListener('click', this._refundEventCallback);
+};
+
+/**
+ * Assigns a callback function to coin insertion.
+ * @param {clickCallback} [callback] Insert event callback. Passed coin value.
+ */
+ScratchVendingMachineGUI.prototype.insertAction = function(callback) {
+	var self = this;
+
+	// Remove previous click event
+	if (self._insertEventCallback) { 
+		self._eachCoin.call(this, function(coin) {
+			coin.removeEventListener('click', self._insertEventCallback);
+		});
+	}
+
+	// Create new click event
+	self._insertEventCallback = function(e) {
+		if (!e.target.disabled) {
+			callback(parseInt(e.target.value) / 100);
+		}
+	};
+
+	// Add click event to coins
+	self._eachCoin.call(this, function(coin) {
+		coin.addEventListener('click', self._insertEventCallback);
 	});
+};
+
+/**
+ * Assigns a callback function to a dispenser
+ * @param {clickCallback} [callback] Dispenser item click event callback.
+ */
+ScratchVendingMachineGUI.prototype.dispenserAction = function(callback) {
+	// Remove previous click event
+	if (this._dispenserEventCallback) { 
+		this.elem.dispenserItem.removeEventListener('click', this._dispenserEventCallback);
+	}
+
+	this._dispenserEventCallback = function(e) {
+		if (!e.target.disabled) {
+			callback();
+		}
+	};
+
+	// Add new click event
+	this.elem.dispenserItem.addEventListener('click', this._dispenserEventCallback);
+};
+
+/**
+ * Assigns a callback function to a refund
+ * @param {clickCallback} [callback] Refund click event callback.
+ */
+ScratchVendingMachineGUI.prototype.takeRefundAction = function(callback) {
+	// Remove previous click event
+	if (this._takeRefundEventCallback) { 
+		this.elem.refundMoney.removeEventListener('click', this._takeRefundEventCallback);
+	}
+
+	this._takeRefundEventCallback = function(e) {
+		if (!e.target.disabled) {
+			callback();
+		}
+	};
+
+	// Add new click event
+	this.elem.refundMoney.addEventListener('click', this._takeRefundEventCallback);
 };
 
 /**
