@@ -27,7 +27,7 @@ function scratchLogicLoop(svm) {
 					break;
 				case 'soda':
 					var soda = svm.clicked();
-					if (soda && soda.count !== undefined) {
+					if (soda && soda.count !== undefined && soda.count > 0) {
 						svm.slot(soda.index, soda.count - 1);
 						svm.dispense(soda.index);
 						svm.currency(svm.currency() - 1.25);

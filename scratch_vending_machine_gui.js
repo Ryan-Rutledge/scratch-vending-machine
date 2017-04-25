@@ -13,13 +13,12 @@ function ScratchVendingMachineGUI(container) {
 		gui: gui,
 		state: gui.getElementsByClassName('svm_state')[0],
 		input: gui.getElementsByClassName('svm_input')[0],
-		money: gui.getElementsByClassName('svm_money')[0],
 		answer: gui.getElementsByClassName('svm_answer_box')[0],
 		prompt: gui.getElementsByClassName('svm_prompt')[0],
 		submit: gui.getElementsByClassName('svm_submit')[0],
 		refund: gui.getElementsByClassName('svm_refund')[0],
 		refundBtn: gui.getElementsByClassName('svm_refund_btn')[0],
-		refundMoney: gui.getElementsByClassName('svm_money')[0],
+		refundMoney: gui.getElementsByClassName('svm_refund_money')[0],
 		question: gui.getElementsByClassName('svm_question')[0],
 		currency: gui.getElementsByClassName('svm_currency')[0],
 		dispenser: gui.getElementsByClassName('svm_dispenser')[0],
@@ -29,7 +28,7 @@ function ScratchVendingMachineGUI(container) {
 		slotImage: gui.getElementsByClassName('svm_slot_img'),
 		slotCount: gui.getElementsByClassName('svm_slot_count'),
 		slotPrice: gui.getElementsByClassName('svm_slot_price'),
-		coins: gui.getElementsByClassName('svm_wallet_coin')
+		coins: gui.getElementsByClassName('svm_money')
 	};
 
 	function submitAnswerHandler() {
@@ -50,7 +49,7 @@ function ScratchVendingMachineGUI(container) {
 
 ScratchVendingMachineGUI.prototype.ANIMATE_TIMEOUT = 2000;
 ScratchVendingMachineGUI.prototype.SLOT_COUNT = 3;
-ScratchVendingMachineGUI.prototype.COIN_COUNT = 3;
+ScratchVendingMachineGUI.prototype.COIN_COUNT = 4;
 ScratchVendingMachineGUI.prototype.TEMPLATE = document.createElement('div');
 ScratchVendingMachineGUI.prototype.TEMPLATE.className = 'svm_container';
 ScratchVendingMachineGUI.prototype.TEMPLATE.innerHTML = 

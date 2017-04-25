@@ -85,6 +85,44 @@
 	width: 100px;
 	float: right;
 	position: relative;
+	text-align: center;
+}
+
+.svm_money {
+	margin: 8px auto;
+	display: block;
+	cursor: pointer;
+}
+
+.svm_coin {
+	border-color: #eee;
+	border-bottom: 1px;
+	border-radius: 50%;
+}
+
+.svm_dollar {
+	border: 2px solid #000;
+	background-color: #1d4;
+	width: 70px;
+	height: 30px;
+}
+
+.svm_coin.svm_money_5 {
+	height: 42.42px;
+	width: 42.42px;
+	background-color: #ccc;
+}
+
+.svm_coin.svm_money_10 {
+	height: 35.8px;
+	width: 35.8px;
+	background-color: #ddd;
+}
+
+.svm_coin.svm_money_25 {
+	height: 48.52px;
+	width: 48.52px;
+	background-color: #cba;
 }
 
 .svm_vending_machine {
@@ -242,7 +280,7 @@
 	position: relative;
 	box-shadow: 1px 1px 2px #080808;
 }
-.svm_refund > .svm_money {
+.svm_refund > .svm_refund_money {
 	background-color: #1d4;
 	border: 2px solid #000;
 	border-radius: 25% 25% 0 0;
@@ -257,11 +295,11 @@
 	cursor: pointer;
 }
 
-.svm_refund > .svm_money {
+.svm_refund > .svm_refund_money {
 	height: 0;
 }
 
-.svm_refund.svm_refunding > .svm_money {
+.svm_refund.svm_refunding > .svm_refund_money {
 	height: 20px;
 	transition: height 1s;
 	visibility: visible;
