@@ -20,6 +20,17 @@ function ScratchVendingMachine(container) {
 }
 
 /**
+ * Turns the vms on or off.
+ * @param {bool} [on=true] - Turns on if true, off otherwise.
+ * @return {Object} The current SVM object.
+ */
+ScratchVendingMachine.prototype.init = function(on) {
+	this.gui.init(on === undefined ? false : !on);
+
+	return this;
+};
+
+/**
  * Gets or sets currency within SVM.
  * @param {number} [currency] If supplied, will become new currency within SVM.
  * @return {number|Object} If a new currency value is supplied, returns

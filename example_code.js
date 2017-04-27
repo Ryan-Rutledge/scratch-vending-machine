@@ -79,5 +79,6 @@ function createSVM() {
 		.slot(1, 9, 'Ginger Ale', 'gingerale.png', 1.25)
 		.slot(2, 4, 'Root Beer', './rootbeer.png', 1.25)
 		.loop(scratchLogicLoop) // Set logic loop
-		.state('A'); // Begin loop at state A
+		.state('A')
+		.init(); // Begin loop at state A
 }

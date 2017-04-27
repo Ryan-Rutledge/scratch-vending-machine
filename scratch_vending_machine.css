@@ -2,9 +2,19 @@
 	position: relative;
 	width: 100%;
 	height: 100%;
-	background-color: #eee;
+	background-color: #bbb;
 	box-sizing: border-box;
 	overflow: hidden;
+}
+
+.svm_container button {
+	cursor: pointer;
+}
+
+.svm_container button:disabled {
+	cursor: default;
+	cursor: not-allowed;
+	opacity: 0.5;
 }
 
 .svm_container button:focus {
@@ -89,15 +99,24 @@
 }
 
 .svm_money {
+	color: #111;
 	margin: 8px auto;
 	display: block;
 	cursor: pointer;
+	opacity: 0.9;
+}
+
+.svm_money:hover:not(:disabled) {
+	opacity: 1;
+	box-shadow: 0 0 4px 2px #fff, -1px -1px 2px -2px #000 inset;
 }
 
 .svm_coin {
 	border-color: #eee;
 	border-bottom: 1px;
 	border-radius: 50%;
+	border-width: 1px;
+	box-shadow: -1px -1px 2px -2px #000 inset;
 }
 
 .svm_dollar {
@@ -131,12 +150,14 @@
 	right: 0;
 	top: -5px;
 	margin: 20px 10px;
-	background-color: #336;
-	width: 280px;
+	background-color: #512888;
+	width: 300px;
 	height: 360px;
-	border-right: 15px solid #113;
+	border-right: 20px solid #200555;
 	border-radius: 20px 35px 20px 10px;
-	box-shadow: 38px 5px 15px -12px #0a0a0a, -4px -5px 3px #113 inset;
+	box-shadow:
+		32px 14px 15px -4px #0a0a0a,
+		-4px -5px 3px #200555 inset;
 	float: left;
 }
 
@@ -178,16 +199,16 @@
 .svm_slot_button:not(:disabled) {
 	box-shadow: -3px -2px 2px #111 inset;
 	background-color: #ddf;
-	cursor: pointer;
 }
 
 .svm_slot_button:hover:not(:disabled) {
-	background-color: #f8f8f8;
+	box-shadow: 0 0 4px 2px #fff, -2px -1px 3px #666 inset;
+	background-color: #eee;
 }
 
 .svm_slot_button:active:not(:disabled) {
 	box-shadow: 2px 3px 2px #181818 inset;
-	background-color: #f3f3f3;
+	background-color: #eee;
 }
 
 .svm_slot_img,
@@ -227,7 +248,7 @@
 	width: calc(33% - 5px);
 	height: 230px;
 	float: right;
-	background-color: #55a;
+	background-color: #845bbb;
 	box-shadow: 1px 1px 2px #080808 inset;
 }
 
@@ -292,7 +313,6 @@
 	margin: auto;
 	box-shadow: 2px 2px 4px #111;
 	visibility: hidden;
-	cursor: pointer;
 }
 
 .svm_refund > .svm_refund_money {
@@ -314,15 +334,15 @@
 	border: none;
 	box-shadow: -1px -1px 1px #000 inset;
 }
-.svm_refund_btn:not(:disabled) {
-	cursor: pointer;
-}
 .svm_refund_btn:active:not(:disabled) {
 	box-shadow: 1px 1px 1px #000 inset;
 }
 .svm_refund_btn:disabled {
 	box-shadow: 0 0 1px #A00 inset;
 	background-color: #933;
+}
+.svm_refund_btn:hover:not(:disabled) {
+	box-shadow: 0 0 4px 2px #fff, -1px -1px 2px -2px #000 inset;
 }
 
 .svm_refund_slot {

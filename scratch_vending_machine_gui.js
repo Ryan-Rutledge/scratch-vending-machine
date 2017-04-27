@@ -11,6 +11,7 @@ function ScratchVendingMachineGUI(container) {
 	var gui = container;
 	self.elem = {
 		gui: gui,
+		buttons: gui.getElementsByTagName('button'),
 		state: gui.getElementsByClassName('svm_state')[0],
 		input: gui.getElementsByClassName('svm_input')[0],
 		answer: gui.getElementsByClassName('svm_answer_box')[0],
@@ -45,6 +46,8 @@ function ScratchVendingMachineGUI(container) {
 	self.elem.input.addEventListener('keypress', function(e) {
 		if (e.keyCode === 13) submitAnswerHandler();
 	});
+
+	self.init(false);
 }
 
 ScratchVendingMachineGUI.prototype.ANIMATE_TIMEOUT = 2000;
@@ -73,6 +76,16 @@ ScratchVendingMachineGUI.prototype._eachSlot = function(callback) {
 ScratchVendingMachineGUI.prototype._eachCoin = function(callback) {
 	for (var i = 0; i < ScratchVendingMachineGUI.prototype.COIN_COUNT; i++) {
 		callback(this.elem.coins[i]);
+	}
+};
+
+/**
+ * Enables or disables the vending machine buttons
+ * @param {boolean} on - If true, enables buttons. Otherwise, disables them.
+ */
+ScratchVendingMachineGUI.prototype.init = function(on) {
+	for (var i = 0; i < this.elem.buttons.length; i++) {
+		this.elem.buttons[i].disabled = !!on;
 	}
 };
 
