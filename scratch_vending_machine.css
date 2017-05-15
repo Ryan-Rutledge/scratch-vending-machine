@@ -15,6 +15,7 @@
 	cursor: default;
 	cursor: not-allowed;
 	opacity: 0.5;
+	box-shadow: none;
 }
 
 .svm_container button:focus {
@@ -103,12 +104,18 @@
 	margin: 8px auto;
 	display: block;
 	cursor: pointer;
-	opacity: 0.9;
+	opacity: 0.8;
+	box-shadow: 2px 2px 1px #111;
 }
 
 .svm_money:hover:not(:disabled) {
 	opacity: 1;
-	box-shadow: 0 0 4px 2px #fff, -1px -1px 2px -2px #000 inset;
+	box-shadow: 0 0 4px 2px #fff, 4px 4px 2px #333;
+}
+
+.svm_money:active:not(:disabled) {
+	opacity: 1;
+	box-shadow: 1px 1px 1px #222;
 }
 
 .svm_coin {
@@ -116,7 +123,6 @@
 	border-bottom: 1px;
 	border-radius: 50%;
 	border-width: 1px;
-	box-shadow: -1px -1px 2px -2px #000 inset;
 }
 
 .svm_dollar {
@@ -155,9 +161,7 @@
 	height: 360px;
 	border-right: 20px solid #200555;
 	border-radius: 20px 35px 20px 10px;
-	box-shadow:
-		32px 14px 15px -4px #0a0a0a,
-		-4px -5px 3px #200555 inset;
+	box-shadow: 12px 12px 12px #222;
 	float: left;
 }
 
@@ -193,21 +197,24 @@
 	height: 100%;
 	border: none;
 	position: relative;
+}
+
+.svm_slot_button:disabled {
 	box-shadow: -2px -1px 2px 0 #333 inset;
 }
 
 .svm_slot_button:not(:disabled) {
-	box-shadow: -3px -2px 2px #111 inset;
+	box-shadow: 4px 4px 2px #111;
 	background-color: #ddf;
 }
 
 .svm_slot_button:hover:not(:disabled) {
-	box-shadow: 0 0 4px 2px #fff, -2px -1px 3px #666 inset;
+	box-shadow: 0 0 4px 2px #fff, 4px 4px 2px #222;
 	background-color: #eee;
 }
 
 .svm_slot_button:active:not(:disabled) {
-	box-shadow: 2px 3px 2px #181818 inset;
+	box-shadow: 3px 3px 2px #222 inset;
 	background-color: #eee;
 }
 
@@ -249,11 +256,11 @@
 	height: 230px;
 	float: right;
 	background-color: #845bbb;
-	box-shadow: 1px 1px 2px #080808 inset;
+	box-shadow: 2px 2px 2px #080808 inset;
 }
 
 .svm_display {
-	background-color: #111;
+	background-color: #333;
 	width: calc(100% - 20px);
 	height: 30px;
 	line-height: 30px;
@@ -270,7 +277,7 @@
 }
 
 .svm_keypad {
-	background-color: #111;
+	background-color: #333;
 	margin: 10px auto 0 auto;
 	display: block;
 	width: 50px;
@@ -285,7 +292,7 @@
 	display: block;
 	float: left;
 	margin: 5px 0 0 5px;
-	box-shadow: -2px -2px 2px #000 inset;
+	box-shadow: 4px 4px 2px #000;
 }
 
 .svm_refund_container {
@@ -294,7 +301,7 @@
 }
 
 .svm_refund {
-	background-color: #111;
+	background-color: #333;
 	margin: 0 auto 10px auto;
 	width: 50px;
 	height: 20px;
@@ -311,7 +318,7 @@
 	left: 0;
 	right: 0;
 	margin: auto;
-	box-shadow: 2px 2px 4px #111;
+	box-shadow: 2px 3px 2px rgb(0, 0, 0, 0.7);
 	visibility: hidden;
 }
 
@@ -320,7 +327,7 @@
 }
 
 .svm_refund.svm_refunding > .svm_refund_money {
-	height: 20px;
+	height: 40px;
 	transition: height 1s;
 	visibility: visible;
 }
@@ -348,7 +355,7 @@
 .svm_refund_slot {
 	height: 20px;
 	width: 10px;
-	background-color: #222;
+	background-color: #333;
 	border-radius: 1px;
 	float: left;
 	margin-left: 4px;
